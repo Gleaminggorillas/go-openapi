@@ -83,3 +83,4 @@ func deleteTodo(c *gin.Context) {
 	// return error message if todo is not found
 	r := message{"todo not found"}
 	c.JSON(http.StatusNotFound, r)
+}
