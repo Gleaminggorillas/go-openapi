@@ -32,3 +32,19 @@ var todoList = []todo{
 func getAllTodos(c *gin.Context) {
 	c.JSON(http.StatusOK, todoList)
 }
+
+func getTodoByID(c *gin.Context) {
+	ID := c.Param("id")
+
+	// loop through todoList and return item with matching ID
+	for _, todo := range todoList {
+			if todo.ID == ID {
+					c.JSON(http.StatusOK, todo)
+					return
+			}
+	}
+
+	// return error message if todo is not found
+	r := message{"todo not found"}
+	c.JSON(http.StatusNotFound, r)
+}
