@@ -10,6 +10,7 @@ func main() {
 	// configure the Gin server
 	router := gin.Default()
 	router.GET("/todo", getAllTodos)
+	router.GET("/todo/:id", getTodoByID)
 	// run the Gin server
 	router.Run()
 }
