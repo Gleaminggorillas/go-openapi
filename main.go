@@ -12,6 +12,7 @@ func main() {
 	router.GET("/todo", getAllTodos)
 	router.GET("/todo/:id", getTodoByID)
 	router.POST("/todo", createTodo)
+	router.POST("/todo", deleteTodo)
 	// run the Gin server
 	router.Run()
 }
@@ -65,3 +66,20 @@ func createTodo(c *gin.Context) {
 	todoList = append(todoList, newTodo)
 	c.JSON(http.StatusCreated, newTodo)
 }
+
+func deleteTodo(c *gin.Context) {
+	ID := c.Param("id")
+
+	// loop through todoList and delete item with matching ID
+	for index, todo := range todoList {
+			if todo.ID == ID {
+					todoList = append(todoList[:index], todoList[index+1:]...)
+					r := message{"successfully deleted todo"}
+					c.JSON(http.StatusOK, r)
+					return
+			}
+	}
+
+	// return error message if todo is not found
+	r := message{"todo not found"}
+	c.JSON(http.StatusNotFound, r)
