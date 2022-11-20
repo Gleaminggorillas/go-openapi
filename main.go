@@ -12,7 +12,7 @@ func main() {
 	router.GET("/todo", getAllTodos)
 	router.GET("/todo/:id", getTodoByID)
 	router.POST("/todo", createTodo)
-	router.POST("/todo", deleteTodo)
+	router.POST("/todo/:id", deleteTodo)
 	// run the Gin server
 	router.Run()
 }
