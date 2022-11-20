@@ -11,6 +11,7 @@ func main() {
 	router := gin.Default()
 	router.GET("/todo", getAllTodos)
 	router.GET("/todo/:id", getTodoByID)
+	router.POST("/todo", createTodo)
 	// run the Gin server
 	router.Run()
 }
@@ -48,4 +49,19 @@ func getTodoByID(c *gin.Context) {
 	// return error message if todo is not found
 	r := message{"todo not found"}
 	c.JSON(http.StatusNotFound, r)
+}
+
+func createTodo(c *gin.Context) {
+	var newTodo todo
+
+	// bind the received JSON data to newTodo
+	if err := c.BindJSON(&newTodo); err != nil {
+			r := message{"an error occurred while creating todo"}
+			c.JSON(http.StatusBadRequest, r)
+			return
+	}
+
+	// add the new todo item to todoList
+	todoList = append(todoList, newTodo)
+	c.JSON(http.StatusCreated, newTodo)
 }
